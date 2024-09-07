@@ -10,4 +10,12 @@ export class DeviceController {
   public async listDevices() {
     return await this.deviceService.listDevices();
   }
+
+  public async getDevice(deviceId: string) {
+    return await this.deviceService.getDevice(deviceId);
+  }
+
+  public async getDeviceObservations(deviceId: string) {
+    return await this.deviceService.getDeviceObservations(deviceId);
+  }
 }
