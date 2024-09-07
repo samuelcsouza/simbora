@@ -1,5 +1,10 @@
 import { Body, Controller, Param, Post } from '@nestjs/common';
 import { DeviceService } from './device.service';
+import {
+  DevicePayload,
+  DeviceSendDataParams,
+  DeviceSendDataReturnMessage,
+} from './device.entity';
 
 @Controller('devices')
 export class DeviceController {
@@ -7,14 +12,16 @@ export class DeviceController {
 
   @Post('/:id')
   async sendDeviceData(
-    @Body() payload: any,
-    @Param() params: { id: string },
-  ): Promise<any> {
+    @Body() payload: DevicePayload,
+    @Param() params: DeviceSendDataParams,
+  ): Promise<DeviceSendDataReturnMessage> {
     await this.deviceService.sendData(payload);
 
-    return {
-      id: params.id,
-      payload: payload.payload,
+    const response: DeviceSendDataReturnMessage = {
+      status: 'ok',
+      timestamp: new Date().getTime(),
     };
+
+    return response;
   }
 }
