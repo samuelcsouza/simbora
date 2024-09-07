@@ -83,4 +83,10 @@ export class DeviceRepository extends Repository<Device> {
 
     return device;
   }
+
+  async listDevices(): Promise<Device[]> {
+    const deviceList = this.find({});
+
+    return deviceList;
+  }
 }

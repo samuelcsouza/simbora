@@ -32,4 +32,9 @@ export class DeviceController {
   async getDevice(@Param() params: { id: string }): Promise<Device> {
     return await this.deviceService.getDevice(params.id);
   }
+
+  @Get()
+  async listDevices(): Promise<Device[]> {
+    return await this.deviceService.listDevices();
+  }
 }

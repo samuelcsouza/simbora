@@ -16,4 +16,8 @@ export class DeviceService {
   async getDevice(deviceId: string): Promise<Device> {
     return await this.deviceRepository.getDevice(deviceId);
   }
+
+  async listDevices(): Promise<Device[]> {
+    return await this.deviceRepository.listDevices();
+  }
 }
