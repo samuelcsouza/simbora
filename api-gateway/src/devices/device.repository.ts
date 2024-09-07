@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { Admin } from '@nestjs/microservices/external/kafka.interface';
 import { Kafka } from 'kafkajs';
-import { DevicePayload } from './device.entity';
+import { DevicePayloadParsed } from './device.entity';
 
 @Injectable()
 export class DeviceRepository {
@@ -44,17 +44,13 @@ export class DeviceRepository {
 
   async sendMessageToTopic(
     topic: string,
-    message: DevicePayload,
-  ): Promise<DevicePayload> {
-    console.debug(
-      `> Passing into Device Repository! Message: ${JSON.stringify(message)}`,
-    );
-
+    message: DevicePayloadParsed,
+  ): Promise<any> {
     return new Promise((resolve) => {
       this.client
         // .send('fibo', JSON.stringify({ num: n }))
         .send(topic, JSON.stringify(message))
-        .subscribe((result: DevicePayload) => {
+        .subscribe((result: any) => {
           console.log('>>>>>>>>>>>>>>>>>>>>>>>>', result);
           resolve(result);
         });
