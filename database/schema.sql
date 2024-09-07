@@ -20,7 +20,7 @@ create table public.observation (
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	value varchar(255),
 	variable varchar(255),
-	unit varchar(25),
+	unit varchar(255),
 	"deviceId" uuid,
 	primary key ("observationId")
 );

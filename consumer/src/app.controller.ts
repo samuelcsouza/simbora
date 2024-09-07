@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { DevicePayload, DevicePayloadParsed } from './device.entity';
+import { ObservationService } from './observation/observation.service';
 
 @Controller()
 export class AppController {
@@ -12,13 +13,23 @@ export class AppController {
       : this.fibonacci(n - 1) + this.fibonacci(n - 2);
   }
 
+  constructor(private observationService: ObservationService) {}
+
   @MessagePattern('636b4c0f-4490-4213-ba53-db21b44c97b0')
   async getFibonacci(@Payload() message: { payload: string }) {
     console.log(
       `new message from topic 636b4c0f-4490-4213-ba53-db21b44c97b0 | `,
       message,
     );
-    return await this.payloadParser(message);
+
+    const payloadParsed = await this.payloadParser(message);
+
+    await this.observationService.insert(
+      '636b4c0f-4490-4213-ba53-db21b44c97b0',
+      payloadParsed,
+    );
+
+    return payloadParsed;
   }
 
   @MessagePattern('f65de111-18d2-4cfc-b367-80d208748490')
@@ -27,7 +38,15 @@ export class AppController {
       `new message from topic f65de111-18d2-4cfc-b367-80d208748490 | `,
       message,
     );
-    return await this.payloadParser(message);
+
+    const payloadParsed = await this.payloadParser(message);
+
+    await this.observationService.insert(
+      'f65de111-18d2-4cfc-b367-80d208748490',
+      payloadParsed,
+    );
+
+    return payloadParsed;
   }
 
   @MessagePattern('e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003')
@@ -36,7 +55,15 @@ export class AppController {
       `new message from topic e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003 | `,
       message,
     );
-    return await this.payloadParser(message);
+
+    const payloadParsed = await this.payloadParser(message);
+
+    await this.observationService.insert(
+      'e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003',
+      payloadParsed,
+    );
+
+    return payloadParsed;
   }
 
   private async payloadParser(
