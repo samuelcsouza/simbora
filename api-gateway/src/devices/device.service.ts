@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DeviceRepository } from './device.repository';
-import { DevicePayload } from './device.entity';
+import { Device, DevicePayload } from './device.entity';
 
 @Injectable()
 export class DeviceService {
@@ -8,5 +8,9 @@ export class DeviceService {
 
   async sendData(payload: DevicePayload): Promise<DevicePayload> {
     return await this.deviceRepository.sendMessageToTopic('fibo', payload);
+  }
+
+  async getDevice(deviceId: string): Promise<Device> {
+    return await this.deviceRepository.getDevice(deviceId);
   }
 }

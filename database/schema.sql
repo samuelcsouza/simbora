@@ -19,8 +19,7 @@ create table public.observation (
 	variable varchar(255),
 	unit varchar(25),
 	"deviceId" uuid,
-	primary key ("observationId"),
-	FOREIGN KEY ("deviceId") REFERENCES "device" ("deviceId")
+	primary key ("observationId")
 );
 
 INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('636b4c0f-4490-4213-ba53-db21b44c97b0'::uuid, 'device 1', 'device 1 description kkkk');

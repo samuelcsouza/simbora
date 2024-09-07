@@ -1,6 +1,7 @@
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { DeviceService } from './device.service';
 import {
+  Device,
   DevicePayload,
   DeviceSendDataParams,
   DeviceSendDataReturnMessage,
@@ -23,5 +24,10 @@ export class DeviceController {
     };
 
     return response;
+  }
+
+  @Get('/:id')
+  async getDevice(@Param() params: { id: string }): Promise<Device> {
+    return await this.deviceService.getDevice(params.id);
   }
 }

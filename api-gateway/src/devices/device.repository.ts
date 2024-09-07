@@ -83,4 +83,12 @@ export class DeviceRepository extends Repository<Device> {
       );
     }
   }
+
+  async getDevice(deviceId: string): Promise<Device> {
+    const device = this.findOne({
+      where: { deviceId: deviceId },
+    });
+
+    return device;
+  }
 }
