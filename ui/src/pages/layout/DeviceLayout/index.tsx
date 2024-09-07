@@ -16,9 +16,10 @@ export function DeviceLayout({ children }: PropsWithChildren) {
   const [deviceList, setDeviceList] = useState<any[]>([]);
 
   useEffect(() => {
-    deviceController.listDevices().then((devices) => setDeviceList(devices));
-    console.log("Calling use effect ...");
-  });
+    deviceController.listDevices().then((devices) => {
+      setDeviceList(devices);
+    });
+  }, []);
 
   return (
     <div>
