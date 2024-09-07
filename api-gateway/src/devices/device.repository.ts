@@ -50,10 +50,6 @@ export class DeviceRepository extends Repository<Device> {
         topics: topicList,
       });
     }
-
-    await this.createDevice('device 1', 'device 1 description kkkk');
-    await this.createDevice('device 2', 'device 2 description kkkk');
-    await this.createDevice('device 3', 'device 3 description kkkk');
   }
 
   async sendMessageToTopic(
