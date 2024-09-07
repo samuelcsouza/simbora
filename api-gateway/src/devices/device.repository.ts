@@ -1,13 +1,23 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { Admin } from '@nestjs/microservices/external/kafka.interface';
 import { Kafka } from 'kafkajs';
-import { DevicePayload } from './device.entity';
+import { Device, DevicePayload } from './device.entity';
+import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
-export class DeviceRepository {
+export class DeviceRepository extends Repository<Device> {
   private admin: Admin;
-  constructor(@Inject('FIBO_SERVICE') private client: ClientKafka) {}
+  constructor(
+    @Inject('FIBO_SERVICE') private client: ClientKafka,
+    private dataSource: DataSource,
+  ) {
+    super(Device, dataSource.createEntityManager());
+  }
 
   async onModuleInit() {
     this.client.subscribeToResponseOf('fibo');
@@ -40,6 +50,10 @@ export class DeviceRepository {
         topics: topicList,
       });
     }
+
+    await this.createDevice('device 1', 'device 1 description kkkk');
+    await this.createDevice('device 2', 'device 2 description kkkk');
+    await this.createDevice('device 3', 'device 3 description kkkk');
   }
 
   async sendMessageToTopic(
@@ -54,5 +68,23 @@ export class DeviceRepository {
           resolve(result);
         });
     });
+  }
+
+  async createDevice(name: string, description: string): Promise<Device> {
+    const device = this.create();
+
+    device.deviceName = name;
+    device.description = description;
+
+    try {
+      await device.save();
+
+      console.debug(`Created a new device! ${device.deviceId}`);
+      return device;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        `Error when create a new Device! ${String(error)}`,
+      );
+    }
   }
 }

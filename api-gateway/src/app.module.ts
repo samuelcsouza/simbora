@@ -4,6 +4,8 @@ import { DeviceModule } from './devices/device.module';
 import { DeviceController } from './devices/device.controller';
 import { DeviceService } from './devices/device.service';
 import { DeviceRepository } from './devices/device.repository';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from './configs/typeorm.config';
 
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import { DeviceRepository } from './devices/device.repository';
       },
     ]),
     DeviceModule,
+    TypeOrmModule.forRoot(typeOrmConfig),
   ],
   controllers: [DeviceController],
   providers: [DeviceService, DeviceRepository],
