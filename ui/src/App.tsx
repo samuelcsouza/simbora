@@ -1,24 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import devicePng from "./assets/device.png";
+import {
+  CCard,
+  CCardImage,
+  CCardBody,
+  CCardTitle,
+  CCardText,
+  CButton,
+} from "@coreui/react";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <header></header>
+      <body>
+        <CCard className="text-center" style={{ width: "18rem" }}>
+          <CCardImage orientation="top" src={devicePng} width={"100rem"} />
+          <CCardBody>
+            <CCardTitle>Card title</CCardTitle>
+            <CCardText>
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </CCardText>
+            <CButton color="primary" href="#">
+              Go somewhere
+            </CButton>
+          </CCardBody>
+        </CCard>
+      </body>
     </div>
   );
 }
