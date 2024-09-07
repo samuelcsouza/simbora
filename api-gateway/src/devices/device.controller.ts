@@ -18,7 +18,7 @@ export class DeviceController {
     await this.deviceService.sendData(payload);
 
     const response: DeviceSendDataReturnMessage = {
-      status: 'ok',
+      status: 'success',
       timestamp: new Date().getTime(),
     };
 
