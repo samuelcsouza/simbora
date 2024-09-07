@@ -1,18 +1,10 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { DevicePayload, DevicePayloadParsed } from './device.entity';
+import { DevicePayload, DevicePayloadParsed } from './device/device.entity';
 import { ObservationService } from './observation/observation.service';
 
 @Controller()
 export class AppController {
-  private fibonacci(n: number) {
-    return n < 1
-      ? 0
-      : n <= 2
-      ? 1
-      : this.fibonacci(n - 1) + this.fibonacci(n - 2);
-  }
-
   constructor(private observationService: ObservationService) {}
 
   @MessagePattern('636b4c0f-4490-4213-ba53-db21b44c97b0')

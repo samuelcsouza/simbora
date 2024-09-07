@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { Observation } from './observation.entity';
-import { DevicePayloadParsed } from 'src/device.entity';
+import { DevicePayloadParsed } from 'src/device/device.entity';
 
 @Injectable()
 export class ObservationRepository extends Repository<Observation> {

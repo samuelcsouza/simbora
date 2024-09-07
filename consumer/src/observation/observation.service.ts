@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ObservationRepository } from './observation.repository';
 import { Observation } from './observation.entity';
-import { DevicePayloadParsed } from 'src/device.entity';
+import { DevicePayloadParsed } from 'src/device/device.entity';
 
 @Injectable()
 export class ObservationService {
