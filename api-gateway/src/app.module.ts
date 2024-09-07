@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AppController } from './app.controller';
+import { DeviceModule } from './devices/device.module';
+import { DeviceController } from './devices/device.controller';
+import { DeviceService } from './devices/device.service';
+import { DeviceRepository } from './devices/device.repository';
 
 @Module({
   imports: [
@@ -19,8 +22,9 @@ import { AppController } from './app.controller';
         },
       },
     ]),
+    DeviceModule,
   ],
-  controllers: [AppController],
-  providers: [],
+  controllers: [DeviceController],
+  providers: [DeviceService, DeviceRepository],
 })
 export class AppModule {}

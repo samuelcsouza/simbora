@@ -12,10 +12,11 @@ export class AppController {
   }
 
   @MessagePattern('fibo')
-  getFibonacci(@Payload() message: { num: number }) {
+  getFibonacci(@Payload() message: { payload: string }) {
     console.log(`new message!`);
     console.log(message);
-    const { num } = message;
-    return this.fibonacci(num);
+    // const { num } = message;
+    // return this.fibonacci(num);
+    return message;
   }
 }
