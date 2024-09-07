@@ -4,6 +4,9 @@
 
 -- DROP TABLE public.device;
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
 CREATE TABLE public.device (
 	"deviceId" uuid DEFAULT uuid_generate_v4() NOT NULL,
 	"deviceName" varchar(50) NOT NULL,
