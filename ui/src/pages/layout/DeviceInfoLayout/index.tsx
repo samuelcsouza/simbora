@@ -2,10 +2,11 @@
 import { PropsWithChildren, useEffect, useState } from "react";
 import { DeviceController } from "../../../controllers";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function DeviceInfoLayout({ children }: PropsWithChildren) {
   const { deviceId } = useParams();
+  const navigate = useNavigate();
 
   const deviceController = new DeviceController();
 
@@ -22,18 +23,18 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
       .then((observations) => setDeviceObservations(observations));
   }, []);
 
+  const handleGoBackClick = () => {
+    navigate("/");
+  };
+
   return (
     <div>
       <>Hello from device {deviceId} info!</>
-      <p>
-        Device kasjdkajsd
-        {JSON.stringify(deviceMetadata)}
-      </p>
+      <p>Device {JSON.stringify(deviceMetadata)}</p>
       <hr />
-      <p>
-        Observações jota jota jota ká
-        {JSON.stringify(deviceObservations)}
-      </p>
+      <p>Observações {JSON.stringify(deviceObservations)}</p>
+
+      <button onClick={handleGoBackClick}>Return</button>
     </div>
   );
 }
