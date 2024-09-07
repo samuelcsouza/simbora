@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Device } from 'src/devices/device.entity';
+import { Observation } from 'src/observation/observation.entity';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -8,6 +9,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: 'root',
   password: 'root',
   database: 'postgres',
-  entities: [Device],
+  entities: [Device, Observation],
   synchronize: true,
 };

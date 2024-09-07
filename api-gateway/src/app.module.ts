@@ -6,6 +6,9 @@ import { DeviceService } from './devices/device.service';
 import { DeviceRepository } from './devices/device.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './configs/typeorm.config';
+import { ObservationModule } from './observation/observation.module';
+import { ObservationService } from './observation/observation.service';
+import { ObservationRepository } from './observation/observation.repository';
 
 @Module({
   imports: [
@@ -25,9 +28,15 @@ import { typeOrmConfig } from './configs/typeorm.config';
       },
     ]),
     DeviceModule,
+    ObservationModule,
     TypeOrmModule.forRoot(typeOrmConfig),
   ],
   controllers: [DeviceController],
-  providers: [DeviceService, DeviceRepository],
+  providers: [
+    DeviceService,
+    DeviceRepository,
+    ObservationService,
+    ObservationRepository,
+  ],
 })
 export class AppModule {}

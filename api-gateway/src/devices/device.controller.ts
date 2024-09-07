@@ -6,10 +6,15 @@ import {
   DeviceSendDataParams,
   DeviceSendDataReturnMessage,
 } from './device.entity';
+import { ObservationService } from 'src/observation/observation.service';
+import { Observation } from 'src/observation/observation.entity';
 
 @Controller('devices')
 export class DeviceController {
-  constructor(private deviceService: DeviceService) {}
+  constructor(
+    private deviceService: DeviceService,
+    private observationService: ObservationService,
+  ) {}
 
   @Post('/:id')
   async sendDeviceData(
@@ -31,6 +36,13 @@ export class DeviceController {
   @Get('/:id')
   async getDevice(@Param() params: { id: string }): Promise<Device> {
     return await this.deviceService.getDevice(params.id);
+  }
+
+  @Get('/:id/observations')
+  async listObservations(
+    @Param() params: { id: string },
+  ): Promise<Observation[]> {
+    return await this.observationService.list(params.id);
   }
 
   @Get()
