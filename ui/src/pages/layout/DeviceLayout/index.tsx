@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { PropsWithChildren, useEffect, useState } from "react";
 import { DeviceController } from "../../../controllers";
 import devicePng from "../../../assets/device.png";
@@ -9,8 +10,11 @@ import {
   CCardText,
   CButton,
 } from "@coreui/react";
+import { useNavigate } from "react-router-dom";
 
 export function DeviceLayout({ children }: PropsWithChildren) {
+  const navigate = useNavigate();
+
   const deviceController = new DeviceController();
 
   const [deviceList, setDeviceList] = useState<any[]>([]);
@@ -21,10 +25,15 @@ export function DeviceLayout({ children }: PropsWithChildren) {
     });
   }, []);
 
+  const handleClick = (deviceId: string) => {
+    navigate(`/devices/${deviceId}`);
+  };
+
   return (
     <div>
       {deviceList
         ? deviceList.map((device) => {
+            console.log("Mapping ..."); // ! Check performance !
             return (
               <div key={device.deviceId}>
                 <CCard className="text-center" style={{ width: "18rem" }}>
@@ -41,7 +50,10 @@ export function DeviceLayout({ children }: PropsWithChildren) {
                         Created At {device.createdAt}
                       </small>
                     </CCardText>
-                    <CButton color="primary" href="#">
+                    <CButton
+                      color="primary"
+                      onClick={() => handleClick(device.deviceId)}
+                    >
                       Details
                     </CButton>
                   </CCardBody>

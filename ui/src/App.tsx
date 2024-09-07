@@ -1,7 +1,11 @@
-import { DeviceLayout } from "./pages/layout/DeviceLayout";
+import { RenderRoutes } from "./routes";
 
 function App() {
-  return <DeviceLayout></DeviceLayout>;
+  return (
+    <>
+      <RenderRoutes />
+    </>
+  );
 }
 
 export default App;
