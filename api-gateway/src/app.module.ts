@@ -11,7 +11,7 @@ import { typeOrmConfig } from './configs/typeorm.config';
   imports: [
     ClientsModule.register([
       {
-        name: 'FIBO_SERVICE',
+        name: 'DEVICE_SERVICE',
         transport: Transport.KAFKA,
         options: {
           client: {

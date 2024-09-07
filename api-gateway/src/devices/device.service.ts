@@ -6,8 +6,11 @@ import { Device, DevicePayload } from './device.entity';
 export class DeviceService {
   constructor(private deviceRepository: DeviceRepository) {}
 
-  async sendData(payload: DevicePayload): Promise<DevicePayload> {
-    return await this.deviceRepository.sendMessageToTopic('fibo', payload);
+  async sendData(
+    topic: string,
+    payload: DevicePayload,
+  ): Promise<DevicePayload> {
+    return await this.deviceRepository.sendMessageToTopic(topic, payload);
   }
 
   async getDevice(deviceId: string): Promise<Device> {

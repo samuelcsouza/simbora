@@ -16,7 +16,9 @@ export class DeviceController {
     @Body() payload: DevicePayload,
     @Param() params: DeviceSendDataParams,
   ): Promise<DeviceSendDataReturnMessage> {
-    await this.deviceService.sendData(payload);
+    const { id } = params;
+
+    await this.deviceService.sendData(id, payload);
 
     const response: DeviceSendDataReturnMessage = {
       status: 'success',
