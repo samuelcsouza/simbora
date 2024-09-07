@@ -1,8 +1,4 @@
-import {
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { Admin } from '@nestjs/microservices/external/kafka.interface';
 import { Kafka } from 'kafkajs';
@@ -78,24 +74,6 @@ export class DeviceRepository extends Repository<Device> {
           resolve(result);
         });
     });
-  }
-
-  async createDevice(name: string, description: string): Promise<Device> {
-    const device = this.create();
-
-    device.deviceName = name;
-    device.description = description;
-
-    try {
-      await device.save();
-
-      console.debug(`Created a new device! ${device.deviceId}`);
-      return device;
-    } catch (error) {
-      throw new InternalServerErrorException(
-        `Error when create a new Device! ${String(error)}`,
-      );
-    }
   }
 
   async getDevice(deviceId: string): Promise<Device> {

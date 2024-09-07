@@ -14,7 +14,10 @@ export class AppController {
 
   @MessagePattern('636b4c0f-4490-4213-ba53-db21b44c97b0')
   async getFibonacci(@Payload() message: { payload: string }) {
-    console.log(`new message!`, message);
+    console.log(
+      `new message from topic 636b4c0f-4490-4213-ba53-db21b44c97b0 | `,
+      message,
+    );
     return await this.payloadParser(message);
   }
 
