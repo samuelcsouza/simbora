@@ -33,18 +33,14 @@ export function DeviceLayout({ children }: PropsWithChildren) {
   };
 
   return (
-    <div className="root">
+    <div className="device-layout">
       <CRow>
         {deviceList
           ? deviceList.map((device) => {
               return (
-                <CCol sm={6}>
+                <CCol sm={6} key={device.deviceId}>
                   <CCard className="text-center" style={{ width: "15rem" }}>
-                    <CCardImage
-                      orientation="top"
-                      src={deviceImage}
-                      width={"85rem"}
-                    />
+                    <CCardImage orientation="top" src={deviceImage} />
                     <CCardBody>
                       <CCardTitle>{device.deviceName}</CCardTitle>
                       <CCardText>{device.description}</CCardText>
