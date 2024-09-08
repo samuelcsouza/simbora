@@ -32,6 +32,9 @@ export class ObservationRepository extends Repository<Observation> {
       where: {
         deviceId: deviceId,
       },
+      order: {
+        createdAt: 'DESC',
+      },
     });
   }
 }
