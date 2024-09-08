@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { PropsWithChildren, useEffect, useState } from "react";
 import { DeviceController } from "../../../controllers";
-import devicePng from "../../../assets/device.png";
 import {
   CCard,
   CCardImage,
@@ -9,13 +8,17 @@ import {
   CCardTitle,
   CCardText,
   CButton,
+  CRow,
+  CCol,
 } from "@coreui/react";
 import { useNavigate } from "react-router-dom";
+import deviceImage from "../../../assets/download.png";
+import "./style.css";
 
 export function DeviceLayout({ children }: PropsWithChildren) {
-  const navigate = useNavigate();
-
   const deviceController = new DeviceController();
+
+  const navigate = useNavigate();
 
   const [deviceList, setDeviceList] = useState<any[]>([]);
 
@@ -30,38 +33,34 @@ export function DeviceLayout({ children }: PropsWithChildren) {
   };
 
   return (
-    <div>
-      {deviceList
-        ? deviceList.map((device) => {
-            console.log("Mapping ..."); // ! Check performance !
-            return (
-              <div key={device.deviceId}>
-                <CCard className="text-center" style={{ width: "18rem" }}>
-                  <CCardImage
-                    orientation="top"
-                    src={devicePng}
-                    width={"100rem"}
-                  />
-                  <CCardBody>
-                    <CCardTitle>{device.deviceName}</CCardTitle>
-                    <CCardText>{device.description}</CCardText>
-                    <CCardText>
-                      <small className="text-body-secondary">
-                        Created At {device.createdAt}
-                      </small>
-                    </CCardText>
-                    <CButton
-                      color="primary"
-                      onClick={() => handleClick(device.deviceId)}
-                    >
-                      Details
-                    </CButton>
-                  </CCardBody>
-                </CCard>
-              </div>
-            );
-          })
-        : "Loading..."}
+    <div className="root">
+      <CRow>
+        {deviceList
+          ? deviceList.map((device) => {
+              return (
+                <CCol sm={6}>
+                  <CCard className="text-center" style={{ width: "15rem" }}>
+                    <CCardImage
+                      orientation="top"
+                      src={deviceImage}
+                      width={"85rem"}
+                    />
+                    <CCardBody>
+                      <CCardTitle>{device.deviceName}</CCardTitle>
+                      <CCardText>{device.description}</CCardText>
+                      <CButton
+                        color="primary"
+                        onClick={() => handleClick(device.deviceId)}
+                      >
+                        Details
+                      </CButton>
+                    </CCardBody>
+                  </CCard>
+                </CCol>
+              );
+            })
+          : "Loading..."}
+      </CRow>
     </div>
   );
 }
