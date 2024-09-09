@@ -24,11 +24,16 @@ export class ObservationService {
   private async payloadParser(
     payload: DevicePayload,
   ): Promise<DevicePayloadParsed> {
+    const DEFAULT_TIMESTAMP = new Date().getTime().toString();
+    const DEFAULT_DEVICE_VALUE = 'Invalid payload format';
+    const DEFAULT_DEVICE_VARIABLE = 'Parser Error';
+    const DEFAULT_DEVICE_UNIT = 'Error';
+
     let dataSplit: string[] = [
-      new Date().getTime().toString(),
-      'Invalid payload format',
-      'Parser Error',
-      'Error',
+      DEFAULT_TIMESTAMP,
+      DEFAULT_DEVICE_VALUE,
+      DEFAULT_DEVICE_VARIABLE,
+      DEFAULT_DEVICE_UNIT,
     ];
 
     try {
@@ -38,10 +43,10 @@ export class ObservationService {
     }
 
     const parsed: DevicePayloadParsed = {
-      deviceTimestamp: dataSplit[0].toString(),
-      deviceValue: dataSplit[1].toString(),
-      deviceVariable: dataSplit[2].toString(),
-      deviceUnit: dataSplit[3].toString(),
+      deviceTimestamp: dataSplit[0]?.toString() || DEFAULT_TIMESTAMP,
+      deviceValue: dataSplit[1]?.toString() || DEFAULT_DEVICE_VALUE,
+      deviceVariable: dataSplit[2]?.toString() || DEFAULT_DEVICE_VARIABLE,
+      deviceUnit: dataSplit[3]?.toString(),
     };
 
     return parsed;
