@@ -1,9 +1,17 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { DeviceService } from './device.service';
 import {
   Device,
   DevicePayload,
-  DeviceSendDataParams,
+  DeviceParams,
   DeviceSendDataReturnMessage,
 } from './device.entity';
 import { ObservationService } from 'src/observation/observation.service';
@@ -19,30 +27,38 @@ export class DeviceController {
   @Post('/:id')
   async sendDeviceData(
     @Body() payload: DevicePayload,
-    @Param() params: DeviceSendDataParams,
+    @Param() params: DeviceParams,
   ): Promise<DeviceSendDataReturnMessage> {
     const { id } = params;
 
-    await this.deviceService.sendData(id, payload);
+    if (!payload.payload) {
+      throw new HttpException('Missing Payload!', HttpStatus.BAD_REQUEST);
+    }
+
+    const parsedMessage = await this.deviceService.sendData(id, payload);
 
     const response: DeviceSendDataReturnMessage = {
-      status: 'success',
       timestamp: new Date().getTime(),
+      message: parsedMessage,
     };
 
     return response;
   }
 
   @Get('/:id')
-  async getDevice(@Param() params: { id: string }): Promise<Device> {
-    return await this.deviceService.getDevice(params.id);
+  async getDevice(@Param() params: DeviceParams): Promise<Device> {
+    const { id } = params;
+
+    return await this.deviceService.getDevice(id);
   }
 
   @Get('/:id/observations')
   async listObservations(
-    @Param() params: { id: string },
+    @Param() params: DeviceParams,
   ): Promise<Observation[]> {
-    return await this.observationService.list(params.id);
+    const { id } = params;
+
+    return await this.observationService.list(id);
   }
 
   @Get()

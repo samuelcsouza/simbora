@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { Admin } from '@nestjs/microservices/external/kafka.interface';
 import { Kafka } from 'kafkajs';
-import { Device, DevicePayload } from './device.entity';
+import { Device, DevicePayload, DevicePayloadParsed } from './device.entity';
 import { DataSource, Repository } from 'typeorm';
 
 @Injectable()
@@ -16,9 +16,14 @@ export class DeviceRepository extends Repository<Device> {
   }
 
   async onModuleInit() {
-    this.client.subscribeToResponseOf('636b4c0f-4490-4213-ba53-db21b44c97b0');
-    this.client.subscribeToResponseOf('f65de111-18d2-4cfc-b367-80d208748490');
-    this.client.subscribeToResponseOf('e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003');
+    try {
+      this.client.subscribeToResponseOf('636b4c0f-4490-4213-ba53-db21b44c97b0');
+      this.client.subscribeToResponseOf('f65de111-18d2-4cfc-b367-80d208748490');
+      this.client.subscribeToResponseOf('e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003');
+    } catch (error) {
+      console.error(`Error when subscribe into devices topics!`);
+      process.exit(1);
+    }
 
     const kafka = new Kafka({
       clientId: 'my-app',
@@ -53,24 +58,30 @@ export class DeviceRepository extends Repository<Device> {
     }
 
     if (topicList.length) {
-      await this.admin.createTopics({
-        topics: topicList,
-      });
+      try {
+        await this.admin.createTopics({
+          topics: topicList,
+        });
+      } catch (error) {
+        console.error(`Error while create topics!`, error);
+      }
     }
   }
 
   async sendMessageToTopic(
     topic: string,
     message: DevicePayload,
-  ): Promise<any> {
+  ): Promise<DevicePayloadParsed> {
     console.debug(
       `Send message to topic ${topic} | message: ${JSON.stringify(message)}`,
     );
     return new Promise((resolve) => {
       this.client
         .send(topic, JSON.stringify(message))
-        .subscribe((result: any) => {
-          console.log('>>>>>>>>>>>>>>>>>>>>>>>>', result);
+        .subscribe((result: DevicePayloadParsed) => {
+          console.debug(
+            `The message was saved. Payload: ${JSON.stringify(result)}`,
+          );
           resolve(result);
         });
     });

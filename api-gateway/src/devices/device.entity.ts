@@ -17,13 +17,17 @@ export interface DevicePayloadParsed {
   deviceUnit: string;
 }
 
-export interface DeviceSendDataParams {
+export interface DeviceParams {
   id: string;
 }
 
 export interface DeviceSendDataReturnMessage {
-  status: string;
   timestamp: number;
+  message: DevicePayloadParsed | string;
+}
+
+export interface DeviceSendDataResponse {
+  message: DevicePayloadParsed;
 }
 
 @Entity()

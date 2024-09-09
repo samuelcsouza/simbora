@@ -25,6 +25,6 @@ create table public.observation (
 	primary key ("observationId")
 );
 
-INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('636b4c0f-4490-4213-ba53-db21b44c97b0'::uuid, 'device 1', 'device 1 description kkkk');
-INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('f65de111-18d2-4cfc-b367-80d208748490'::uuid, 'device 2', 'device 2 description kkkk');
-INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003'::uuid, 'device 3', 'device 3 description kkkk');
+INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('636b4c0f-4490-4213-ba53-db21b44c97b0'::uuid, 'Temperature Device', 'Average temperature');
+INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('f65de111-18d2-4cfc-b367-80d208748490'::uuid, 'Density Device', 'Average Water Density');
+INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003'::uuid, 'Humidity Device', 'Relative Humidity');
