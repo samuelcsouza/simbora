@@ -12,7 +12,8 @@ export class ObservationService {
     try {
       observations = await this.observationRepository.listById(deviceId);
     } catch (error) {
-      console.log(error);
+      const e = error as Error;
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
     }
 
     if (observations.length == 0) {
