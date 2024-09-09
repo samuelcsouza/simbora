@@ -22,7 +22,7 @@ export class ObservationRepository extends Repository<Observation> {
 
     await this.insert(observation);
 
-    console.debug(`Inserted data! | `, observation);
+    console.debug(`Inserted data! ${JSON.stringify(observation)}\n`);
 
     return observation;
   }

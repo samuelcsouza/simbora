@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { DeviceService } from './device.service';
 import {
   Device,
@@ -24,10 +32,7 @@ export class DeviceController {
     const { id } = params;
 
     if (!payload.payload) {
-      return {
-        timestamp: new Date().getTime(),
-        message: 'Missing payload!',
-      };
+      throw new HttpException('Missing Payload!', HttpStatus.BAD_REQUEST);
     }
 
     const parsedMessage = await this.deviceService.sendData(id, payload);
