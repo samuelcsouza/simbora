@@ -16,6 +16,12 @@ export class DeviceController {
   }
 
   public async getDeviceObservations(deviceId: string) {
-    return await this.deviceService.getDeviceObservations(deviceId);
+    const observationsList = await this.deviceService.getDeviceObservations(
+      deviceId
+    );
+
+    if (observationsList.statusCode === 404) return [];
+
+    return observationsList;
   }
 }

@@ -21,19 +21,23 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
 
   const deviceController = new DeviceController();
 
-  const [deviceMetadata, setdeviceMetadata] = useState<any>([]);
+  const [deviceMetadata, setDeviceMetadata] = useState<any>([]);
   const [deviceObservations, setDeviceObservations] = useState<any[]>([]);
 
   useEffect(() => {
-    deviceController
-      .getDevice(deviceId!)
-      .then((device) => setdeviceMetadata(device));
+    deviceController.getDevice(deviceId!).then((device) => {
+      if (device?.statusCode === 404) {
+        navigate("/");
+      }
+      setDeviceMetadata(device);
+    });
 
     deviceController.getDeviceObservations(deviceId!).then((observations) => {
-      const _observationsTable = observations.map((obs: any) => {
+      const _observationsTable = observations?.map((obs: any) => {
         obs._cellProps = { id: { scope: "row" } };
         return obs;
       });
+
       setDeviceObservations(_observationsTable);
     });
   }, []);
