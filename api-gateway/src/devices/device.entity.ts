@@ -22,8 +22,14 @@ export interface DeviceSendDataParams {
 }
 
 export interface DeviceSendDataReturnMessage {
-  status: string;
+  status: boolean;
+  message: string;
   timestamp: number;
+}
+
+export interface DeviceSendDataResponse {
+  success: boolean;
+  message: string;
 }
 
 @Entity()

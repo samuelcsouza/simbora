@@ -23,10 +23,19 @@ export class DeviceController {
   ): Promise<DeviceSendDataReturnMessage> {
     const { id } = params;
 
-    await this.deviceService.sendData(id, payload);
+    if (!payload.payload) {
+      return {
+        status: false,
+        message: 'Missing payload!',
+        timestamp: new Date().getTime(),
+      };
+    }
+
+    const { success, message } = await this.deviceService.sendData(id, payload);
 
     const response: DeviceSendDataReturnMessage = {
-      status: 'success',
+      status: success,
+      message: message,
       timestamp: new Date().getTime(),
     };
 
