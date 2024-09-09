@@ -43,6 +43,22 @@ export class DeviceService {
   }
 
   async listDevices(): Promise<Device[]> {
-    return await this.deviceRepository.listDevices();
+    let deviceList: Device[] = [];
+
+    try {
+      deviceList = await this.deviceRepository.listDevices();
+    } catch (error) {
+      const e = error as Error;
+      throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
+    }
+
+    if (deviceList.length == 0) {
+      throw new HttpException(
+        `There are no devices in the Database`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return deviceList;
   }
 }

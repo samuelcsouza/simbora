@@ -51,9 +51,11 @@ export class DeviceController {
 
   @Get('/:id/observations')
   async listObservations(
-    @Param() params: { id: string },
+    @Param() params: DeviceParams,
   ): Promise<Observation[]> {
-    return await this.observationService.list(params.id);
+    const { id } = params;
+
+    return await this.observationService.list(id);
   }
 
   @Get()
