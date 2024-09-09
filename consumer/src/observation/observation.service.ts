@@ -24,7 +24,18 @@ export class ObservationService {
   private async payloadParser(
     payload: DevicePayload,
   ): Promise<DevicePayloadParsed> {
-    const dataSplit = payload.payload.split(';');
+    let dataSplit: string[] = [
+      new Date().getTime().toString(),
+      'Invalid payload format',
+      'Parser Error',
+      'Error',
+    ];
+
+    try {
+      dataSplit = payload.payload.split(';');
+    } catch (error) {
+      console.error(`Invalid payload format! ${JSON.stringify(payload)}`);
+    }
 
     const parsed: DevicePayloadParsed = {
       deviceTimestamp: dataSplit[0].toString(),
