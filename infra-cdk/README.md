@@ -16,3 +16,7 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 ## References
 
 [AWS Docs for CDK](https://docs.aws.amazon.com/cdk/v2/guide/hello_world.html)
+[Automate Amazon ECS cluster creation with a custom docker image using AWS CDK](https://blog.learnmorecloud.com/automate-amazon-ecs-cluster-creation-with-a-custom-docker-image-using-aws-cdk#heading-github-link)
+[Github](https://github.com/joelwembo/aws-cdk-multi-tenant-saas-ecommerce/blob/master/lib/aws-cloudapp-stack.ts)
+[Github - lb](https://github.dev/rhydvik/aws-cdk-ecs-fargate-load-balancer)
+[AWS Docs](https://containers-cdk-react-amplify.ws.kabits.com/backend-containers-with-aws-cdk/creating-task/)
