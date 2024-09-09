@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { DeviceRepository } from './device.repository';
-import { Device, DevicePayload, DeviceSendDataResponse } from './device.entity';
+import { Device, DevicePayload, DevicePayloadParsed } from './device.entity';
 
 @Injectable()
 export class DeviceService {
@@ -9,13 +9,14 @@ export class DeviceService {
   async sendData(
     topic: string,
     payload: DevicePayload,
-  ): Promise<DeviceSendDataResponse> {
+  ): Promise<DevicePayloadParsed> {
     try {
-      await this.deviceRepository.sendMessageToTopic(topic, payload);
-      return {
-        success: true,
-        message: 'Data was sent',
-      };
+      const msg = await this.deviceRepository.sendMessageToTopic(
+        topic,
+        payload,
+      );
+
+      return msg;
     } catch (error) {
       console.error(`Error when send message: `, error);
       const e: Error = error;

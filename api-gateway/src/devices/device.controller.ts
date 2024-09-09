@@ -25,18 +25,16 @@ export class DeviceController {
 
     if (!payload.payload) {
       return {
-        status: false,
-        message: 'Missing payload!',
         timestamp: new Date().getTime(),
+        message: 'Missing payload!',
       };
     }
 
-    const { success, message } = await this.deviceService.sendData(id, payload);
+    const parsedMessage = await this.deviceService.sendData(id, payload);
 
     const response: DeviceSendDataReturnMessage = {
-      status: success,
-      message: message,
       timestamp: new Date().getTime(),
+      message: parsedMessage,
     };
 
     return response;

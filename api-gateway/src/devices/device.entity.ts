@@ -22,14 +22,12 @@ export interface DeviceParams {
 }
 
 export interface DeviceSendDataReturnMessage {
-  status: boolean;
-  message: string;
   timestamp: number;
+  message: DevicePayloadParsed | string;
 }
 
 export interface DeviceSendDataResponse {
-  success: boolean;
-  message: string;
+  message: DevicePayloadParsed;
 }
 
 @Entity()
