@@ -6,6 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
+export interface MessagePayload {
+  payload: string;
+}
+
 @Entity()
 export class Observation extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
