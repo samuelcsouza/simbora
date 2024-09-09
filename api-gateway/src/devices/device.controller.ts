@@ -3,7 +3,7 @@ import { DeviceService } from './device.service';
 import {
   Device,
   DevicePayload,
-  DeviceSendDataParams,
+  DeviceParams,
   DeviceSendDataReturnMessage,
 } from './device.entity';
 import { ObservationService } from 'src/observation/observation.service';
@@ -19,7 +19,7 @@ export class DeviceController {
   @Post('/:id')
   async sendDeviceData(
     @Body() payload: DevicePayload,
-    @Param() params: DeviceSendDataParams,
+    @Param() params: DeviceParams,
   ): Promise<DeviceSendDataReturnMessage> {
     const { id } = params;
 
@@ -43,8 +43,10 @@ export class DeviceController {
   }
 
   @Get('/:id')
-  async getDevice(@Param() params: { id: string }): Promise<Device> {
-    return await this.deviceService.getDevice(params.id);
+  async getDevice(@Param() params: DeviceParams): Promise<Device> {
+    const { id } = params;
+
+    return await this.deviceService.getDevice(id);
   }
 
   @Get('/:id/observations')
