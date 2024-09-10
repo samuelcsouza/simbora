@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "07b8dab1-8b59-4765-8f61-c2e0613dfbc9",
+		"name": "Simbora",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32095605"
+	},
+	"item": [
+		{
+			"name": "Send Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"payload\": \"{{$timestamp}};ACIDENTE;KM82;NORTH;SANTA RITA DO SAPUCAI\"\n}\n\n// format: TIMESTAMP;INCIDENT;DISTANCE;DIRECTION;CITY",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api-url}}/highways/:id",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"highways",
+						":id"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "636b4c0f-4490-4213-ba53-db21b44c97b0",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003",
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": "f65de111-18d2-4cfc-b367-80d208748490",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "f65de111-18d2-4cfc-b367-80d208748490"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Highway",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/highways/:id",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"highways",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Highway Incidents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/highways/:id/observations",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"highways",
+						":id",
+						"observations"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "f65de111-18d2-4cfc-b367-80d208748490"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Highways",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api-url}}/highways",
+					"host": [
+						"{{api-url}}"
+					],
+					"path": [
+						"highways"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api-url",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
