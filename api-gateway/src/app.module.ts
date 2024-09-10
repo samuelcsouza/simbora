@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { DeviceModule } from './devices/device.module';
-import { DeviceController } from './devices/device.controller';
-import { DeviceService } from './devices/device.service';
-import { DeviceRepository } from './devices/device.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './configs/typeorm.config';
-import { ObservationModule } from './observation/observation.module';
-import { ObservationService } from './observation/observation.service';
-import { ObservationRepository } from './observation/observation.repository';
+import { ObservationsModule } from './observations/observation.module';
+import { ObservationsService } from './observations/observation.service';
+import { ObservationsRepository } from './observations/observation.repository';
+import { HighwayModule } from './highways/highway.module';
+import { HighwayController } from './highways/highway.controller';
+import { HighwayService } from './highways/highway.service';
+import { HighwayRepository } from './highways/highway.repository';
 
 @Module({
   imports: [
@@ -27,16 +27,16 @@ import { ObservationRepository } from './observation/observation.repository';
         },
       },
     ]),
-    DeviceModule,
-    ObservationModule,
+    HighwayModule,
+    ObservationsModule,
     TypeOrmModule.forRoot(typeOrmConfig),
   ],
-  controllers: [DeviceController],
+  controllers: [HighwayController],
   providers: [
-    DeviceService,
-    DeviceRepository,
-    ObservationService,
-    ObservationRepository,
+    HighwayService,
+    HighwayRepository,
+    ObservationsService,
+    ObservationsRepository,
   ],
 })
 export class AppModule {}

@@ -5,6 +5,6 @@ import { DeviceInfoLayout } from "./pages/layout/DeviceInfoLayout";
 export const RenderRoutes = () => (
   <Routes>
     <Route path="/" element={<DeviceLayout />} />
-    <Route path="/devices/:deviceId" element={<DeviceInfoLayout />} />
+    <Route path="/highways/:highwayId" element={<DeviceInfoLayout />} />
   </Routes>
 );

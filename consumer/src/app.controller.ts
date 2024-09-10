@@ -1,11 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { ObservationService } from './observation/observation.service';
-import { MessagePayload } from './observation/observation.entity';
+import { ObservationsService } from './observations/observation.service';
+import { MessagePayload } from './observations/observation.entity';
 
 @Controller()
 export class AppController {
-  constructor(private observationService: ObservationService) {}
+  constructor(private observationsService: ObservationsService) {}
 
   @MessagePattern('636b4c0f-4490-4213-ba53-db21b44c97b0')
   async getDevice1Message(@Payload() message: MessagePayload) {
@@ -14,7 +14,7 @@ export class AppController {
       message,
     );
 
-    return await this.observationService.insert(
+    return await this.observationsService.insert(
       '636b4c0f-4490-4213-ba53-db21b44c97b0',
       message,
     );
@@ -27,7 +27,7 @@ export class AppController {
       message,
     );
 
-    return await this.observationService.insert(
+    return await this.observationsService.insert(
       'f65de111-18d2-4cfc-b367-80d208748490',
       message,
     );
@@ -40,7 +40,7 @@ export class AppController {
       message,
     );
 
-    return await this.observationService.insert(
+    return await this.observationsService.insert(
       'e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003',
       message,
     );

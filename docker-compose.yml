@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
@@ -41,7 +41,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     restart: always
     environment:
-      - POSTGRES_USER=root
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=root
     ports:
       - 5432:5432

@@ -1,30 +1,25 @@
--- public.device definition
-
--- Drop table
-
--- DROP TABLE public.device;
+-- Initial Database Schema.
+-- Run when database up
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-
-CREATE TABLE public.device (
-	"deviceId" uuid DEFAULT uuid_generate_v4() NOT NULL,
-	"deviceName" varchar(50) NOT NULL,
-	description varchar(500) NOT NULL,
-	"createdAt" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "PK_6fe2df6e1c34fc6c18c786ca26e" PRIMARY KEY ("deviceId")
+CREATE TABLE public.highways (
+	"highwayId" uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+	"highwayName" varchar(50) NOT NULL,
+	description varchar(50) NOT NULL,
+	"createdAt" timestamp DEFAULT NOW() NOT NULL
 );
 
-create table public.observation (
-	"observationId" uuid default uuid_generate_v4() NOT NULL,
+CREATE TABLE public.observations (
+	"observationId" uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
-	value varchar(255),
-	variable varchar(255),
-	unit varchar(255),
-	"deviceId" uuid,
-	primary key ("observationId")
+	incident varchar(50),
+	distance varchar(50),
+	direction varchar(50),
+	city varchar(50),
+	"highwayId" uuid
 );
 
-INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('636b4c0f-4490-4213-ba53-db21b44c97b0'::uuid, 'Temperature Device', 'Average temperature');
-INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('f65de111-18d2-4cfc-b367-80d208748490'::uuid, 'Density Device', 'Average Water Density');
-INSERT INTO public.device ("deviceId", "deviceName", description) VALUES('e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003'::uuid, 'Humidity Device', 'Relative Humidity');
+INSERT INTO public.highways ("highwayId", "highwayName", description) VALUES('636b4c0f-4490-4213-ba53-db21b44c97b0'::uuid, 'BR-381', 'Rod. Fernão Dias');
+INSERT INTO public.highways ("highwayId", "highwayName", description) VALUES('f65de111-18d2-4cfc-b367-80d208748490'::uuid, 'BR-459', 'Rod. Juscelino Kubitschek de Oliveira');
+INSERT INTO public.highways ("highwayId", "highwayName", description) VALUES('e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003'::uuid, 'BR-116', 'Rod. Presidente Dutra');
