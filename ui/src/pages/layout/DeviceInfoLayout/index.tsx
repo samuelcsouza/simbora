@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { PropsWithChildren, useEffect, useState } from "react";
-import { DeviceController } from "../../../controllers";
+import { HighwayController } from "../../../controllers";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   CCard,
@@ -12,33 +12,33 @@ import {
   CRow,
   CTable,
 } from "@coreui/react";
-import deviceImage from "../../../assets/download.png";
+import deviceImage from "../../../assets/image.png";
 import "./style.css";
 
 export function DeviceInfoLayout({ children }: PropsWithChildren) {
-  const { deviceId } = useParams();
+  const { highwayId } = useParams();
   const navigate = useNavigate();
 
-  const deviceController = new DeviceController();
+  const highwayController = new HighwayController();
 
-  const [deviceMetadata, setDeviceMetadata] = useState<any>([]);
-  const [deviceObservations, setDeviceObservations] = useState<any[]>([]);
+  const [highwayMetadata, setHighwayMetadata] = useState<any>([]);
+  const [highwayObservations, setHighwayObservations] = useState<any[]>([]);
 
   useEffect(() => {
-    deviceController.getDevice(deviceId!).then((device) => {
+    highwayController.getDevice(highwayId!).then((device) => {
       if (device?.statusCode === 404) {
         navigate("/");
       }
-      setDeviceMetadata(device);
+      setHighwayMetadata(device);
     });
 
-    deviceController.getDeviceObservations(deviceId!).then((observations) => {
+    highwayController.getDeviceObservations(highwayId!).then((observations) => {
       const _observationsTable = observations?.map((obs: any) => {
         obs._cellProps = { id: { scope: "row" } };
         return obs;
       });
 
-      setDeviceObservations(_observationsTable);
+      setHighwayObservations(_observationsTable);
     });
   }, []);
 
@@ -53,18 +53,24 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
       _props: { scope: "col" },
     },
     {
-      key: "variable",
-      label: "Variable",
+      key: "incident",
+      label: "Incident",
       _props: { scope: "col" },
     },
     {
-      key: "value",
-      label: "Value",
+      key: "distance",
+      label: "Distance",
       _props: { scope: "col" },
     },
     {
-      key: "unit",
-      label: "Unit",
+      key: "direction",
+      label: "Direction",
+      _props: { scope: "col" },
+    },
+
+    {
+      key: "city",
+      label: "City",
       _props: { scope: "col" },
     },
   ];
@@ -78,11 +84,11 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
           </CCol>
           <CCol md={8}>
             <CCardBody>
-              <CCardTitle>{deviceMetadata.deviceName}</CCardTitle>
-              <CCardText>{deviceMetadata.description}</CCardText>
+              <CCardTitle>{highwayMetadata.highwayName}</CCardTitle>
+              <CCardText>{highwayMetadata.description}</CCardText>
               <CCardText>
                 <small className="text-body-secondary">
-                  Created at {deviceMetadata.createdAt}
+                  Created at {highwayMetadata.createdAt}
                 </small>
               </CCardText>
             </CCardBody>
@@ -93,7 +99,7 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
 
       <div className="row">
         <h1 style={{ marginBottom: "2rem" }}>Observations</h1>
-        <CTable columns={tableColumns} items={deviceObservations} />
+        <CTable columns={tableColumns} items={highwayObservations} />
 
         <button className="btn btn-primary" onClick={handleGoBackClick}>
           Return

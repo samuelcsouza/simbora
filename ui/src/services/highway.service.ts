@@ -1,8 +1,8 @@
-export class DeviceService {
+export class HighwayService {
   private _baseUrl = "http://localhost:3000";
 
   public async listDevices() {
-    const endpoint = this._baseUrl + "/devices";
+    const endpoint = this._baseUrl + "/highways";
 
     const options = {
       method: "GET",
@@ -20,8 +20,8 @@ export class DeviceService {
       });
   }
 
-  public async getDevice(deviceId: string) {
-    const endpoint = `${this._baseUrl}/devices/${deviceId}`;
+  public async getHighway(highwayId: string) {
+    const endpoint = `${this._baseUrl}/highways/${highwayId}`;
 
     const options = {
       method: "GET",
@@ -39,8 +39,8 @@ export class DeviceService {
       });
   }
 
-  public async getDeviceObservations(deviceId: string) {
-    const endpoint = `${this._baseUrl}/devices/${deviceId}/observations`;
+  public async getHighwayObservations(highwayId: string) {
+    const endpoint = `${this._baseUrl}/highways/${highwayId}/observations`;
 
     const options = {
       method: "GET",
@@ -57,6 +57,4 @@ export class DeviceService {
         throw error;
       });
   }
-
-  public async listDeviceObservations(deviceId: string) {}
 }

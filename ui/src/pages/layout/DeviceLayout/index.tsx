@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { PropsWithChildren, useEffect, useState } from "react";
-import { DeviceController } from "../../../controllers";
+import { HighwayController } from "../../../controllers";
 import {
   CCard,
   CCardImage,
@@ -12,41 +12,41 @@ import {
   CCol,
 } from "@coreui/react";
 import { useNavigate } from "react-router-dom";
-import deviceImage from "../../../assets/download.png";
+import deviceImage from "../../../assets/image.png";
 import "./style.css";
 
 export function DeviceLayout({ children }: PropsWithChildren) {
-  const deviceController = new DeviceController();
+  const highwayController = new HighwayController();
 
   const navigate = useNavigate();
 
-  const [deviceList, setDeviceList] = useState<any[]>([]);
+  const [highwayList, setHighwayList] = useState<any[]>([]);
 
   useEffect(() => {
-    deviceController.listDevices().then((devices) => {
-      setDeviceList(devices);
+    highwayController.listDevices().then((highways) => {
+      setHighwayList(highways);
     });
   }, []);
 
-  const handleClick = (deviceId: string) => {
-    navigate(`/devices/${deviceId}`);
+  const handleClick = (highwayId: string) => {
+    navigate(`/highways/${highwayId}`);
   };
 
   return (
     <div className="device-layout">
       <CRow>
-        {deviceList
-          ? deviceList.map((device) => {
+        {highwayList
+          ? highwayList.map((highway) => {
               return (
-                <CCol sm={6} key={device.deviceId}>
+                <CCol sm={6} key={highway.highwayId}>
                   <CCard className="text-center" style={{ width: "15rem" }}>
                     <CCardImage orientation="top" src={deviceImage} />
                     <CCardBody>
-                      <CCardTitle>{device.deviceName}</CCardTitle>
-                      <CCardText>{device.description}</CCardText>
+                      <CCardTitle>{highway.highwayName}</CCardTitle>
+                      <CCardText>{highway.description}</CCardText>
                       <CButton
                         color="primary"
-                        onClick={() => handleClick(device.deviceId)}
+                        onClick={() => handleClick(highway.highwayId)}
                       >
                         Details
                       </CButton>
