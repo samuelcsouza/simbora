@@ -73,6 +73,29 @@ export class HighwayRepository extends Repository<Highways> {
         console.error(`Error while create topics!`, error);
       }
     }
+
+    try {
+      await this.insert([
+        {
+          highwayId: '636b4c0f-4490-4213-ba53-db21b44c97b0',
+          highwayName: 'BR-381',
+          description: 'Rod. Fernão Dias',
+        },
+        {
+          highwayId: 'f65de111-18d2-4cfc-b367-80d208748490',
+          highwayName: 'BR-459',
+          description: 'Rod. Juscelino Kubitschek de Oliveira',
+        },
+        {
+          highwayId: 'e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003',
+          highwayName: 'BR-116',
+          description: 'Rod. Presidente Dutra',
+        },
+      ]);
+      console.debug(`Inserted previous data on Postgres`);
+    } catch (error) {
+      console.debug(`Data already created.`, error?.message);
+    }
   }
 
   async sendMessageToTopic(
