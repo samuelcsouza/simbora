@@ -47,5 +47,49 @@ services:
       - 5432:5432
     container_name: postgresql
 
+  api-gateway:
+    build:
+      context: ./api-gateway
+    environment:
+      - DB_HOST=0.0.0.0
+      - DB_PORT=5432
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - KAFKA_BROKER=0.0.0.0:29092
+    ports:
+      - 3000:3000
+    container_name: api-gateway
+    restart: unless-stopped
+    depends_on:
+      - database
+      - kafka
+
+  consumer:
+    build:
+      context: ./consumer
+    environment:
+      - DB_HOST=0.0.0.0
+      - DB_PORT=5432
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - KAFKA_BROKER=0.0.0.0:29092
+    container_name: consumer
+    restart: unless-stopped
+    depends_on:
+      - database
+      - kafka
+
+  ui:
+    build:
+      context: ./ui
+    environment:
+      - API_URL=http://localhost:3000
+    ports:
+      - 3010:3000
+    container_name: ui
+    restart: unless-stopped
+    depends_on:
+      - api-gateway
+
 volumes:
   postgres_data:
