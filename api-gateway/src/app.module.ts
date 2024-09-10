@@ -9,6 +9,10 @@ import { HighwayModule } from './highways/highway.module';
 import { HighwayController } from './highways/highway.controller';
 import { HighwayService } from './highways/highway.service';
 import { HighwayRepository } from './highways/highway.repository';
+import { AppController } from './app.controller';
+import { config } from 'dotenv';
+
+config();
 
 @Module({
   imports: [
@@ -19,7 +23,7 @@ import { HighwayRepository } from './highways/highway.repository';
         options: {
           client: {
             clientId: 'app-gateway',
-            brokers: ['localhost:29092'],
+            brokers: [process.env.KAFKA_BROKER],
           },
           consumer: {
             groupId: 'kafka-microservices',
@@ -31,7 +35,7 @@ import { HighwayRepository } from './highways/highway.repository';
     ObservationsModule,
     TypeOrmModule.forRoot(typeOrmConfig),
   ],
-  controllers: [HighwayController],
+  controllers: [HighwayController, AppController],
   providers: [
     HighwayService,
     HighwayRepository,
