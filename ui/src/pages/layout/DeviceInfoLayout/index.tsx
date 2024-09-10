@@ -25,14 +25,14 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
   const [highwayObservations, setHighwayObservations] = useState<any[]>([]);
 
   useEffect(() => {
-    highwayController.getDevice(highwayId!).then((device) => {
+    highwayController.getHighway(highwayId!).then((device) => {
       if (device?.statusCode === 404) {
         navigate("/");
       }
       setHighwayMetadata(device);
     });
 
-    highwayController.getDeviceObservations(highwayId!).then((observations) => {
+    highwayController.getHighwayIncidents(highwayId!).then((observations) => {
       const _observationsTable = observations?.map((obs: any) => {
         obs._cellProps = { id: { scope: "row" } };
         return obs;
