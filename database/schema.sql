@@ -21,5 +21,5 @@ CREATE TABLE public.observations (
 );
 
 INSERT INTO public.highways ("highwayId", "highwayName", description) VALUES('636b4c0f-4490-4213-ba53-db21b44c97b0'::uuid, 'BR-381', 'Rod. Fernão Dias');
-INSERT INTO public.highways ("highwayId", "highwayName", description) VALUES('f65de111-18d2-4cfc-b367-80d208748490'::uuid, 'MG-459', 'Rod. Juscelino Kubitschek de Oliveira');
+INSERT INTO public.highways ("highwayId", "highwayName", description) VALUES('f65de111-18d2-4cfc-b367-80d208748490'::uuid, 'BR-459', 'Rod. Juscelino Kubitschek de Oliveira');
 INSERT INTO public.highways ("highwayId", "highwayName", description) VALUES('e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003'::uuid, 'BR-116', 'Rod. Presidente Dutra');
