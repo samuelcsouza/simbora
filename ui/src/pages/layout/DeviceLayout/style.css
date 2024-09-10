@@ -93,6 +93,7 @@ body {
   -webkit-user-select: none;
   user-select: none;
   vertical-align: middle;
+  margin: 0.5rem;
 }
 
 a {
