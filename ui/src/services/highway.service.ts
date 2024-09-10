@@ -1,5 +1,5 @@
 export class HighwayService {
-  private _baseUrl = "http://localhost:3000";
+  private _baseUrl = process.env.REACT_APP_API_URL;
 
   public async listDevices() {
     const endpoint = this._baseUrl + "/highways";
