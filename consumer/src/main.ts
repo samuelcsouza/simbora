@@ -2,6 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 import { v4 as uuidv4 } from 'uuid';
+import { config } from 'dotenv';
+
+config();
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
@@ -11,7 +14,7 @@ async function bootstrap() {
       options: {
         client: {
           clientId: `consumer-${uuidv4()}`,
-          brokers: ['localhost:29092'],
+          brokers: [process.env.KAFKA_BROKER],
         },
         consumer: {
           groupId: 'consumer',

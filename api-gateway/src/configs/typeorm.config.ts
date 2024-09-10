@@ -1,13 +1,16 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Device } from 'src/devices/device.entity';
 import { Observation } from 'src/observation/observation.entity';
+import { config } from 'dotenv';
+
+config();
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'root',
-  password: 'root',
+  host: process.env.DB_HOST || 'localhost',
+  port: Number(process.env.DB_PORT) || 5432,
+  username: process.env.DB_USERNAME || 'postgres',
+  password: process.env.DB_PASSWORD || 'root',
   database: 'postgres',
   entities: [Device, Observation],
   synchronize: true,

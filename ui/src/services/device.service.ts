@@ -1,5 +1,5 @@
 export class DeviceService {
-  private _baseUrl = "http://localhost:3000";
+  private _baseUrl = process.env.API_URL || "http://nestjs-app:3000";
 
   public async listDevices() {
     const endpoint = this._baseUrl + "/devices";

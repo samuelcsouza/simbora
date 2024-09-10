@@ -4,6 +4,9 @@ import { Admin } from '@nestjs/microservices/external/kafka.interface';
 import { Kafka } from 'kafkajs';
 import { Device, DevicePayload, DevicePayloadParsed } from './device.entity';
 import { DataSource, Repository } from 'typeorm';
+import { config } from 'dotenv';
+
+config();
 
 @Injectable()
 export class DeviceRepository extends Repository<Device> {
@@ -27,7 +30,7 @@ export class DeviceRepository extends Repository<Device> {
 
     const kafka = new Kafka({
       clientId: 'my-app',
-      brokers: ['localhost:29092'],
+      brokers: [process.env.KAFKA_BROKER],
     });
     this.admin = kafka.admin();
     const topics = await this.admin.listTopics();
