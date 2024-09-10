@@ -2,17 +2,24 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { Admin } from '@nestjs/microservices/external/kafka.interface';
 import { Kafka } from 'kafkajs';
-import { Device, DevicePayload, DevicePayloadParsed } from './device.entity';
 import { DataSource, Repository } from 'typeorm';
+import {
+  Highways,
+  HighwayPayload,
+  HighwayPayloadParsed,
+} from './highway.entity';
+import { config } from 'dotenv';
+
+config();
 
 @Injectable()
-export class DeviceRepository extends Repository<Device> {
+export class HighwayRepository extends Repository<Highways> {
   private admin: Admin;
   constructor(
     @Inject('DEVICE_SERVICE') private client: ClientKafka,
     private dataSource: DataSource,
   ) {
-    super(Device, dataSource.createEntityManager());
+    super(Highways, dataSource.createEntityManager());
   }
 
   async onModuleInit() {
@@ -21,13 +28,13 @@ export class DeviceRepository extends Repository<Device> {
       this.client.subscribeToResponseOf('f65de111-18d2-4cfc-b367-80d208748490');
       this.client.subscribeToResponseOf('e22c2e51-ed9f-4e7e-9c2b-e2afa0ad3003');
     } catch (error) {
-      console.error(`Error when subscribe into devices topics!`);
+      console.error(`Error when subscribe into Highways topics!`);
       process.exit(1);
     }
 
     const kafka = new Kafka({
       clientId: 'my-app',
-      brokers: ['localhost:29092'],
+      brokers: [process.env.KAFKA_BROKER],
     });
     this.admin = kafka.admin();
     const topics = await this.admin.listTopics();
@@ -70,15 +77,15 @@ export class DeviceRepository extends Repository<Device> {
 
   async sendMessageToTopic(
     topic: string,
-    message: DevicePayload,
-  ): Promise<DevicePayloadParsed> {
+    message: HighwayPayload,
+  ): Promise<HighwayPayloadParsed> {
     console.debug(
       `Send message to topic ${topic} | message: ${JSON.stringify(message)}`,
     );
     return new Promise((resolve) => {
       this.client
         .send(topic, JSON.stringify(message))
-        .subscribe((result: DevicePayloadParsed) => {
+        .subscribe((result: HighwayPayloadParsed) => {
           console.debug(
             `The message was saved. Payload: ${JSON.stringify(result)}`,
           );
@@ -87,17 +94,17 @@ export class DeviceRepository extends Repository<Device> {
     });
   }
 
-  async getDevice(deviceId: string): Promise<Device> {
-    const device = this.findOne({
-      where: { deviceId: deviceId },
+  async getHighway(highwayId: string): Promise<Highways> {
+    const highway = await this.findOne({
+      where: { highwayId: highwayId },
     });
 
-    return device;
+    return highway;
   }
 
-  async listDevices(): Promise<Device[]> {
-    const deviceList = this.find({});
+  async listHighways(): Promise<Highways[]> {
+    const highwayList = await this.find({});
 
-    return deviceList;
+    return highwayList;
   }
 }
