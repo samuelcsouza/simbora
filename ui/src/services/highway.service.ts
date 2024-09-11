@@ -1,7 +1,7 @@
 export class HighwayService {
-  private _baseUrl = "http://localhost:3000";
+  private _baseUrl = process.env.REACT_APP_API_URL;
 
-  public async listDevices() {
+  public async listHighways() {
     const endpoint = this._baseUrl + "/highways";
 
     const options = {
@@ -47,6 +47,28 @@ export class HighwayService {
       headers: {
         "Content-Type": "application/json",
       },
+    };
+
+    return await fetch(endpoint, options)
+      .then(async (response) => {
+        return await response.json();
+      })
+      .catch((error) => {
+        throw error;
+      });
+  }
+
+  public async sendHighwayIncidents(highwayId: string, payload: string) {
+    const endpoint = `${this._baseUrl}/highways/${highwayId}`;
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        payload: payload,
+      }),
     };
 
     return await fetch(endpoint, options)

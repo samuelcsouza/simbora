@@ -23,7 +23,7 @@ export function DeviceLayout({ children }: PropsWithChildren) {
   const [highwayList, setHighwayList] = useState<any[]>([]);
 
   useEffect(() => {
-    highwayController.listDevices().then((highways) => {
+    highwayController.listHighways().then((highways) => {
       setHighwayList(highways);
     });
   }, []);

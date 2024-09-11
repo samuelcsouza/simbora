@@ -12,7 +12,7 @@ import {
   CRow,
   CTable,
 } from "@coreui/react";
-import deviceImage from "../../../assets/image.png";
+import highwayImage from "../../../assets/image.png";
 import "./style.css";
 
 export function DeviceInfoLayout({ children }: PropsWithChildren) {
@@ -25,14 +25,14 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
   const [highwayObservations, setHighwayObservations] = useState<any[]>([]);
 
   useEffect(() => {
-    highwayController.getDevice(highwayId!).then((device) => {
+    highwayController.getHighway(highwayId!).then((device) => {
       if (device?.statusCode === 404) {
         navigate("/");
       }
       setHighwayMetadata(device);
     });
 
-    highwayController.getDeviceObservations(highwayId!).then((observations) => {
+    highwayController.getHighwayIncidents(highwayId!).then((observations) => {
       const _observationsTable = observations?.map((obs: any) => {
         obs._cellProps = { id: { scope: "row" } };
         return obs;
@@ -44,6 +44,10 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
 
   const handleGoBackClick = () => {
     navigate("/");
+  };
+
+  const handleReportIncident = () => {
+    navigate(`/highways/${highwayId}/report`);
   };
 
   const tableColumns = [
@@ -80,7 +84,7 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
       <CCard className="mb-3" style={{ maxWidth: "100%" }}>
         <CRow className="g-0">
           <CCol md={4}>
-            <CCardImage src={deviceImage} width={"150rem"} />
+            <CCardImage src={highwayImage} width={"150rem"} />
           </CCol>
           <CCol md={8}>
             <CCardBody>
@@ -103,6 +107,10 @@ export function DeviceInfoLayout({ children }: PropsWithChildren) {
 
         <button className="btn btn-primary" onClick={handleGoBackClick}>
           Return
+        </button>
+
+        <button className="btn btn-primary" onClick={handleReportIncident}>
+          Report Incident
         </button>
       </div>
     </div>
